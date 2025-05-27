@@ -26,6 +26,11 @@ public class MovSolicitud {
     @JoinColumn(name = "n_id_coordinador")
     private MovUsuario coordinador;
 
+
+    @ManyToOne
+    @JoinColumn(name = "n_id_aplicativo")
+    private MaeAplicativos aplicativo;
+
     @Column(nullable = false)
     private String s_descripcion;
 

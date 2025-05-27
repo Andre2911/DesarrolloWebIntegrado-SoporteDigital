@@ -23,4 +23,10 @@ public class MovUsuario {
     @ManyToOne
     @JoinColumn(name = "n_id_rol")
     private MaeRoles rol;
+
+    @ManyToOne
+    @JoinColumn(name = "n_id_empresa")
+    private MaeEmpresas empresa;
+
+
 }
