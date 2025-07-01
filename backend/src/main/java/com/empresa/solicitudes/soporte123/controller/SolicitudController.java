@@ -15,6 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/solicitudes")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class SolicitudController {
 
     private final SolicitudService solicitudService;
@@ -24,6 +25,16 @@ public class SolicitudController {
     public ResponseEntity<ApiResponse<SolicitudResponse>> crearSolicitud(@RequestBody CrearSolicitudRequest crearSolicitudRequest, Authentication auth) throws Exception {
         String userneme = auth.getName();
         return ResponseEntity.status(HttpStatus.CREATED).body(solicitudService.crearSolicitud(crearSolicitudRequest, userneme));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ApiResponse<SolicitudResponse>> actualizarSolicitud(
+            @PathVariable Integer id,
+            @RequestBody CrearSolicitudRequest request,
+            Authentication auth
+    ) throws Exception {
+        String username = auth.getName();
+        return ResponseEntity.ok(solicitudService.actualizarSolicitud(id, request, username));
     }
 
     @GetMapping("/mis-solicitudes")
@@ -48,6 +59,19 @@ public class SolicitudController {
             Principal principal) throws Exception {
 
         ApiResponse<Void> response = solicitudService.cerrarSolicitud(id, principal.getName());
+        return ResponseEntity.ok(response);
+    }
+
+
+    @GetMapping("/getTiposSolicitud")
+    public ResponseEntity<ApiResponse<List<IdLabelDTO>>> getTiposSolicitud() throws Exception {
+        ApiResponse<List<IdLabelDTO>> response = solicitudService.getTiposSolicitud();
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/getAplicativos")
+    public ResponseEntity<ApiResponse<List<IdLabelDTO>>> getAplicativos() throws Exception {
+        ApiResponse<List<IdLabelDTO>> response = solicitudService.getAplicativos();
         return ResponseEntity.ok(response);
     }
 }

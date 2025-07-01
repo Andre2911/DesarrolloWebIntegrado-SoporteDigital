@@ -6,6 +6,7 @@ import {InputText} from 'primeng/inputtext';
 import {PasswordDirective} from 'primeng/password';
 import {AuthService} from '../../../../service/auth.service';
 import {Router} from '@angular/router';
+import {NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +15,8 @@ import {Router} from '@angular/router';
     ButtonModule,
     FormsModule,
     InputText,
-    PasswordDirective
+    PasswordDirective,
+    NgIf
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
@@ -30,8 +32,11 @@ export class LoginComponent {
   login() {
     this.error = null;
     this.authService.login(this.usuario, this.clave).subscribe({
-      next: (res) => {
-        this.authService.guardarToken(res.token);
+      next: (res: any) => {
+        // Guarda token y usuario completo
+        localStorage.setItem('token', res.token);
+        localStorage.setItem('usuario', JSON.stringify(res.usuario));
+
         this.router.navigate(['/dashboard']);
       },
       error: (err) => {

@@ -34,4 +34,9 @@ export class AuthService {
     localStorage.removeItem('token');
     this.router.navigate(['/auth/login']);
   }
+
+  obtenerUsuarioLocalStorage(): any {
+    const raw = localStorage.getItem('usuario');
+    return raw ? JSON.parse(raw) : null;
+  }
 }

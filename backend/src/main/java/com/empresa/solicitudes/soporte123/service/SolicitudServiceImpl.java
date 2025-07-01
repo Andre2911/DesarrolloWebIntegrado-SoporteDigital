@@ -57,6 +57,28 @@ public class SolicitudServiceImpl implements SolicitudService {
     }
 
     @Override
+    public ApiResponse<SolicitudResponse> actualizarSolicitud(Integer id, CrearSolicitudRequest request, String username) throws Exception {
+        MovSolicitud solicitud = solicitudRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Solicitud no encontrada"));
+
+        MaeTipoSolicitud tipo = tipoSolicitudRepository.findById(request.getTipoSolicitudId())
+                .orElseThrow(() -> new RuntimeException("Tipo de solicitud no válido"));
+
+        MaeAplicativos aplicativo = aplicativoRepository.findById(request.getAplicativoId())
+                .orElseThrow(() -> new RuntimeException("Aplicativo no válido"));
+
+        solicitud.setTipo(tipo);
+        solicitud.setAplicativo(aplicativo);
+        solicitud.setS_descripcion(request.getDescripcion());
+
+        solicitudRepository.save(solicitud);
+
+        SolicitudResponse response = new SolicitudResponse(solicitud.getN_id_solicitud(), solicitud.getEstado());
+        return new ApiResponse<>(true, "Solicitud actualizada correctamente", response);
+    }
+
+
+    @Override
     public ApiResponse<List<SolicitudResumeResponse>> obtenerSolicitudesDelUsuario(String correoUsuario) throws Exception {
         MovUsuario usuario = usuarioRepository.findByCorreo(correoUsuario)
                 .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
@@ -125,5 +147,15 @@ public class SolicitudServiceImpl implements SolicitudService {
         solicitudRepository.save(solicitud);
 
         return new ApiResponse<>(true, "Solicitud finalizada correctamente", null);
+    }
+
+    @Override
+    public ApiResponse<List<IdLabelDTO>> getTiposSolicitud() throws Exception {
+        return new ApiResponse<>(true, "", tipoSolicitudRepository.getIdLabelSolicitud());
+    }
+
+    @Override
+    public ApiResponse<List<IdLabelDTO>> getAplicativos() throws Exception {
+        return new  ApiResponse<>(true, "", aplicativoRepository.getIdLabelAplicativo());
     }
 }

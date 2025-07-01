@@ -1,10 +1,8 @@
 package com.empresa.solicitudes.soporte123.controller;
 
 
-import com.empresa.solicitudes.soporte123.dto.ApiResponse;
-import com.empresa.solicitudes.soporte123.dto.AsignacionResponse;
-import com.empresa.solicitudes.soporte123.dto.AsignacionResumenResponse;
-import com.empresa.solicitudes.soporte123.dto.AsignarColaboradorRequest;
+import com.empresa.solicitudes.soporte123.dto.*;
+import com.empresa.solicitudes.soporte123.models.MovSolicitud;
 import com.empresa.solicitudes.soporte123.service.AsignacionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,9 +16,16 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/asignaciones")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class AsignacionController {
 
     private final AsignacionService asignacionService;
+
+    @GetMapping
+    public ResponseEntity<ApiResponse<List<MovSolicitud>>> listarAsignaciones(Principal principal) {
+        ApiResponse<List<MovSolicitud>> response = asignacionService.listarAsignaciones(principal.getName());
+        return ResponseEntity.ok(response);
+    }
 
     @PostMapping
     public ResponseEntity<ApiResponse<AsignacionResponse>> asignarColaborador(

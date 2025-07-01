@@ -8,7 +8,6 @@
     <ng-template pTemplate="header">
       <tr class="bg-gray-100 text-gray-800 text-sm">
         <th>ID</th>
-        <th>Cliente</th>
         <th>Tipo</th>
         <th>Estado</th>
         <th>Fecha</th>
@@ -19,10 +18,9 @@
     <ng-template pTemplate="body" let-solicitud>
       <tr>
         <td>{{ solicitud.id }}</td>
-        <td>{{ solicitud.cliente }}</td>
         <td>{{ solicitud.tipo }}</td>
         <td>{{ solicitud.estado }}</td>
-        <td>{{ solicitud.fecha }}</td>
+        <td>{{ solicitud.fechaRegistro | date: 'yyyy-MM-dd HH:mm' }}</td>
         <td>
           <button
             pButton

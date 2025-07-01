@@ -1,1 +1,49 @@
-<p>asignaciones works!</p>
+<div class="space-y-6">
+  <h1 class="text-2xl font-bold text-gray-800">Asignaciones</h1>
+
+  <p-table [value]="solicitudes" [paginator]="true" [rows]="5" responsiveLayout="scroll" class="shadow rounded border border-gray-300 bg-white">
+    <ng-template pTemplate="header">
+      <tr class="bg-gray-100 text-gray-800 text-sm">
+        <th>ID</th>
+        <th>Tipo</th>
+        <th>Estado</th>
+        <th>Fecha</th>
+        <th>Responsable</th>
+        <th>Acciones</th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-solicitud>
+      <tr>
+        <td>{{ solicitud.id }}</td>
+        <td>{{ solicitud.tipo }}</td>
+        <td>{{ solicitud.estado }}</td>
+        <td>{{ solicitud.fechaRegistro | date: 'yyyy-MM-dd HH:mm' }}</td>
+        <td>{{ solicitud.responsable || 'No asignado' }}</td>
+        <td>
+          <button
+            pButton
+            type="button"
+            icon="pi pi-user-edit"
+            class="p-button-sm p-button-info"
+            (click)="abrirAsignacion(solicitud)"
+          ></button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+  <p-dialog header="Asignar Responsable" [(visible)]="modalVisible" [modal]="true" [style.width]="'400px'">
+    <div class="p-fluid space-y-4">
+      <p-dropdown
+        [options]="responsables"
+        [(ngModel)]="responsableSeleccionado"
+        optionLabel="nombre"
+        placeholder="Seleccionar responsable"
+        class="w-full"
+      ></p-dropdown>
+
+      <button pButton label="Asignar" class="w-full p-button-success" (click)="asignarResponsable()"></button>
+    </div>
+  </p-dialog>
+</div>

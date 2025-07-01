@@ -6,14 +6,14 @@ import {Router} from '@angular/router';
 @Injectable({ providedIn: 'root' })
 export class SolicitudesService {
 
-  private baseUrl = `${environment.apiUrl}/solicitudes`;
+  private baseUrl = `${environment.apiUrl}/api/solicitudes`;
 
   constructor(private http: HttpClient, private router: Router) {
   }
 
 
   getAll() {
-    return this.http.get<any[]>(this.baseUrl);
+    return this.http.get<any[]>(this.baseUrl + '/mis-solicitudes');
   }
 
   getById(id: number) {
@@ -21,7 +21,7 @@ export class SolicitudesService {
   }
 
   create(data: any) {
-    return this.http.post(this.baseUrl, data);
+    return this.http.post(this.baseUrl + '/crear', data);
   }
 
   update(id: number, data: any) {
@@ -30,5 +30,14 @@ export class SolicitudesService {
 
   delete(id: number) {
     return this.http.delete(`${this.baseUrl}/${id}`);
+  }
+
+
+  getTiposSolicitud() {
+    return this.http.get<any[]>(`${this.baseUrl}/getTiposSolicitud`);
+  }
+
+  getAplicativos() {
+    return this.http.get<any[]>(`${this.baseUrl}/getAplicativos`);
   }
 }

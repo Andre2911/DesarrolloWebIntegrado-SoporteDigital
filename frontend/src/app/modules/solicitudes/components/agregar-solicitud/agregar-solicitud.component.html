@@ -1,0 +1,45 @@
+<div class="max-w-2xl mx-auto mt-10 bg-white p-6 rounded shadow space-y-6">
+  <h2 class="text-2xl font-bold text-center text-blue-800">Agregar Solicitud</h2>
+
+  <form [formGroup]="form" (ngSubmit)="guardar()" class="space-y-5">
+
+    <div class="p-float-label">
+      <p-dropdown
+        inputId="tipoSolicitud"
+        [options]="tipos"
+        optionLabel="label"
+        [optionValue]="'id'"
+        formControlName="tipoSolicitudId"
+        class="w-full"
+        placeholder="Seleccionar tipo">
+      </p-dropdown>
+      <label for="tipoSolicitud">Tipo de Solicitud</label>
+    </div>
+
+    <div class="p-float-label">
+      <p-dropdown
+        inputId="aplicativo"
+        [options]="aplicativos"
+        optionLabel="label"
+        [optionValue]="'id'"
+        formControlName="aplicativoId"
+        class="w-full"
+        placeholder="Seleccionar aplicativo">
+      </p-dropdown>
+      <label for="aplicativo">Aplicativo</label>
+    </div>
+
+    <div class="p-float-label">
+      <textarea
+        id="descripcion"
+        pInputText
+        formControlName="descripcion"
+        rows="4"
+        class="w-full">
+      </textarea>
+      <label for="descripcion">Descripción</label>
+    </div>
+
+    <button pButton type="submit" label="Guardar" class="w-full p-button-success"></button>
+  </form>
+</div>

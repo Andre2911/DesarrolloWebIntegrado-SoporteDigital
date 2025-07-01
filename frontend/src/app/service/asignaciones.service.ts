@@ -7,7 +7,7 @@ import {HttpClient} from '@angular/common/http';
 })
 export class AsignacionesService {
 
-  private baseUrl = `${environment.apiUrl}/asignaciones`;
+  private baseUrl = `${environment.apiUrl}/api/asignaciones`;
 
   constructor(private http: HttpClient) {}
 
