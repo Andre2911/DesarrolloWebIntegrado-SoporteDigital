@@ -47,11 +47,11 @@ public class SolicitudServiceImpl implements SolicitudService {
         solicitud.setAplicativo(aplicativo);
         solicitud.setS_descripcion(request.getDescripcion());
         solicitud.setF_fecha_registro(LocalDateTime.now());
-        solicitud.setS_estado("Pendiente");
+        solicitud.setEstado("Pendiente");
 
         solicitudRepository.save(solicitud);
 
-        SolicitudResponse response = new SolicitudResponse(solicitud.getN_id_solicitud(), solicitud.getS_estado());
+        SolicitudResponse response = new SolicitudResponse(solicitud.getN_id_solicitud(), solicitud.getEstado());
 
         return new ApiResponse<>(true, "Solicitud registrada correctamente", response);
     }
@@ -67,7 +67,7 @@ public class SolicitudServiceImpl implements SolicitudService {
                 .map(s -> new SolicitudResumeResponse(
                         s.getN_id_solicitud(),
                         s.getTipo().getS_nombre_tipo(),
-                        s.getS_estado(),
+                        s.getEstado(),
                         s.getF_fecha_registro()))
                 .toList();
 
@@ -95,7 +95,7 @@ public class SolicitudServiceImpl implements SolicitudService {
                 solicitud.getN_id_solicitud(),
                 solicitud.getS_descripcion(),
                 solicitud.getTipo().getS_nombre_tipo(),
-                solicitud.getS_estado(),
+                solicitud.getEstado(),
                 solicitud.getF_fecha_registro(),
                 solicitud.getF_fecha_cierre(),
                 solicitud.getAplicativo().getNombre(),
@@ -116,11 +116,11 @@ public class SolicitudServiceImpl implements SolicitudService {
             throw new AccessDeniedException("Solo el coordinador puede cerrar esta solicitud.");
         }
 
-        if ("Finalizada".equalsIgnoreCase(solicitud.getS_estado())) {
+        if ("Finalizada".equalsIgnoreCase(solicitud.getEstado())) {
             throw new IllegalStateException("La solicitud ya fue finalizada.");
         }
 
-        solicitud.setS_estado("Finalizada");
+        solicitud.setEstado("Finalizada");
         solicitud.setF_fecha_cierre(LocalDateTime.now());
         solicitudRepository.save(solicitud);
 

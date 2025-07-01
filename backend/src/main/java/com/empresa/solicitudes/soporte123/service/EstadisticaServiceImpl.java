@@ -21,8 +21,8 @@ public class EstadisticaServiceImpl implements EstadisticaService{
     @Override
     public ApiResponse<EstadisticaResumenResponse> obtenerResumen() {
         long total = solicitudRepository.count();
-        long pendientes = solicitudRepository.countBySEstadoIgnoreCase("Pendiente");
-        long finalizadas = solicitudRepository.countBySEstadoIgnoreCase("Finalizada");
+        long pendientes = solicitudRepository.countByEstadoIgnoreCase("Pendiente");
+        long finalizadas = solicitudRepository.countByEstadoIgnoreCase("Finalizada");
 
         Double promedioHoras = actividadRepository.promedioHorasPorSolicitud();
         promedioHoras = promedioHoras != null ? promedioHoras : 0.0;

@@ -37,6 +37,8 @@ public class MovSolicitud {
     @Column(name = "f_fecha_registro", nullable = false)
     private LocalDateTime f_fecha_registro;
 
-    private String s_estado;
+    @Column(name = "s_estado")
+    private String estado;
+
     private LocalDateTime f_fecha_cierre;
 }

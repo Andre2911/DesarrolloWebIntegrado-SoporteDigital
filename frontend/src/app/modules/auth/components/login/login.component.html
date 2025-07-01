@@ -1,0 +1,48 @@
+<div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700 px-4 text-gray-100">
+  <div class="w-full max-w-sm bg-white text-gray-800 rounded-2xl shadow-2xl border border-gray-300 p-8">
+    <h2 class="text-2xl font-bold text-center text-blue-700 mb-6">Iniciar Sesión</h2>
+
+    <form class="space-y-5" (ngSubmit)="login()">
+      <div>
+        <label for="usuario" class="block text-sm font-medium text-gray-700 mb-1">Usuario</label>
+        <div class="flex items-center border border-gray-300 rounded-lg px-3">
+          <i class="pi pi-user text-gray-500 mr-2"></i>
+          <input
+            type="text"
+            id="usuario"
+            [(ngModel)]="usuario"
+            name="usuario"
+            class="w-full py-2 focus:outline-none"
+            required
+          />
+        </div>
+      </div>
+
+      <div>
+        <label for="clave" class="block text-sm font-medium text-gray-700 mb-1">Contraseña</label>
+        <div class="flex items-center border border-gray-300 rounded-lg px-3">
+          <i class="pi pi-lock text-gray-500 mr-2"></i>
+          <input
+            type="password"
+            id="clave"
+            [(ngModel)]="clave"
+            name="clave"
+            class="w-full py-2 focus:outline-none"
+            required
+          />
+        </div>
+      </div>
+
+      <div *ngIf="error" class="text-red-600 text-sm font-medium">
+        {{ error }}
+      </div>
+
+      <button
+        type="submit"
+        class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-all font-semibold"
+      >
+        Ingresar
+      </button>
+    </form>
+  </div>
+</div>

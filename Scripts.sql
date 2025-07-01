@@ -35,20 +35,34 @@ CREATE TABLE soporte.mae_roles (
 
 -- Tipos de solicitud
 CREATE TABLE soporte.mae_tipos_solicitud (
-     n_id_tipo_solicitud SERIAL PRIMARY KEY,
-     s_nombre_tipo VARCHAR(100) NOT NULL
+ n_id_tipo_solicitud SERIAL PRIMARY KEY,
+ s_nombre_tipo VARCHAR(100) NOT NULL
+);
+
+-- Empresas
+CREATE TABLE soporte.mae_empresas (
+  n_id_empresa SERIAL PRIMARY KEY,
+  s_nombre_empresa VARCHAR(100) NOT NULL
+);
+
+-- Aplicativos
+CREATE TABLE soporte.mae_aplicativos (
+ n_id_aplicativo SERIAL PRIMARY KEY,
+ s_nombre_aplicativo VARCHAR(100) NOT NULL
 );
 
 -- ========================================
 -- 5. TABLA DE USUARIOS
 -- ========================================
 CREATE TABLE soporte.mov_usuarios (
-      n_id_usuario SERIAL PRIMARY KEY,
-      s_nombre VARCHAR(100) NOT NULL,
-      s_correo VARCHAR(100) NOT NULL UNIQUE,
-      s_contrasena TEXT NOT NULL,
-      n_id_rol INT NOT NULL,
-      FOREIGN KEY (n_id_rol) REFERENCES soporte.mae_roles(n_id_rol)
+  n_id_usuario SERIAL PRIMARY KEY,
+  s_nombre VARCHAR(100) NOT NULL,
+  s_correo VARCHAR(100) NOT NULL UNIQUE,
+  s_contrasena TEXT NOT NULL,
+  n_id_rol INT NOT NULL,
+  n_id_empresa INT,
+  FOREIGN KEY (n_id_rol) REFERENCES soporte.mae_roles(n_id_rol),
+  FOREIGN KEY (n_id_empresa) REFERENCES soporte.mae_empresas(n_id_empresa)
 );
 
 -- ========================================
@@ -58,14 +72,16 @@ CREATE TABLE soporte.mov_solicitudes (
      n_id_solicitud SERIAL PRIMARY KEY,
      n_id_usuario INT NOT NULL,
      n_id_tipo_solicitud INT NOT NULL,
+     n_id_coordinador INT,
+     n_id_aplicativo INT,
      s_descripcion TEXT NOT NULL,
      f_fecha_registro TIMESTAMP NOT NULL DEFAULT NOW(),
      s_estado VARCHAR(30) NOT NULL DEFAULT 'Pendiente',
      f_fecha_cierre TIMESTAMP,
-     n_id_coordinador INT,
      FOREIGN KEY (n_id_usuario) REFERENCES soporte.mov_usuarios(n_id_usuario),
      FOREIGN KEY (n_id_tipo_solicitud) REFERENCES soporte.mae_tipos_solicitud(n_id_tipo_solicitud),
-     FOREIGN KEY (n_id_coordinador) REFERENCES soporte.mov_usuarios(n_id_usuario)
+     FOREIGN KEY (n_id_coordinador) REFERENCES soporte.mov_usuarios(n_id_usuario),
+     FOREIGN KEY (n_id_aplicativo) REFERENCES soporte.mae_aplicativos(n_id_aplicativo)
 );
 
 -- ========================================
@@ -118,4 +134,15 @@ CREATE TABLE soporte.mov_bitacora_accesos (
       f_fecha_hora TIMESTAMP DEFAULT NOW(),
       s_ip_origen VARCHAR(50),
       FOREIGN KEY (n_id_usuario) REFERENCES soporte.mov_usuarios(n_id_usuario)
+);
+
+-- ========================================
+-- 11. APLICATIVOS INSTALADOS POR EMPRESA
+-- ========================================
+CREATE TABLE soporte.mov_cliente_aplicativos (
+     n_id_cliente_aplicativo SERIAL PRIMARY KEY,
+     n_id_empresa INT NOT NULL,
+     n_id_aplicativo INT NOT NULL,
+     FOREIGN KEY (n_id_empresa) REFERENCES soporte.mae_empresas(n_id_empresa),
+     FOREIGN KEY (n_id_aplicativo) REFERENCES soporte.mae_aplicativos(n_id_aplicativo)
 );

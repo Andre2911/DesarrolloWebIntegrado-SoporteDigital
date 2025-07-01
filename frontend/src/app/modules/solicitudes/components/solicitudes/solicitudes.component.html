@@ -1,0 +1,38 @@
+<div class="space-y-6">
+  <div class="flex justify-between items-center">
+    <h1 class="text-2xl font-bold text-gray-800">Solicitudes</h1>
+    <button pButton type="button" icon="pi pi-plus" label="Agregar Solicitud" class="p-button-sm p-button-success" (click)="agregar()"></button>
+  </div>
+
+  <p-table [value]="solicitudes" [paginator]="true" [rows]="5" responsiveLayout="scroll" class="shadow rounded border border-gray-300 bg-white">
+    <ng-template pTemplate="header">
+      <tr class="bg-gray-100 text-gray-800 text-sm">
+        <th>ID</th>
+        <th>Cliente</th>
+        <th>Tipo</th>
+        <th>Estado</th>
+        <th>Fecha</th>
+        <th>Acciones</th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-solicitud>
+      <tr>
+        <td>{{ solicitud.id }}</td>
+        <td>{{ solicitud.cliente }}</td>
+        <td>{{ solicitud.tipo }}</td>
+        <td>{{ solicitud.estado }}</td>
+        <td>{{ solicitud.fecha }}</td>
+        <td>
+          <button
+            pButton
+            type="button"
+            icon="pi pi-pencil"
+            class="p-button-sm p-button-warning"
+            (click)="editar(solicitud)"
+          ></button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

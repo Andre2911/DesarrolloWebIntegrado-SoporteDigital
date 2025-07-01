@@ -15,10 +15,7 @@ public interface MovSolicitudRepository extends JpaRepository<MovSolicitud, Inte
     List<MovSolicitud> findByUsuario(MovUsuario usuario);
 
     // En MovSolicitudRepository
-    long countBySEstadoIgnoreCase(String estado);
+    long countByEstadoIgnoreCase(String estado);
 
-    // En MovActividadRepository
-    @Query("SELECT AVG(a.n_horas_trabajadas) FROM MovActividad a")
-    Double promedioHorasPorSolicitud();
 
 }
