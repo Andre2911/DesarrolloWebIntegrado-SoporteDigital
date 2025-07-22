@@ -1,10 +1,27 @@
 <div class="space-y-6">
   <div class="flex justify-between items-center">
     <h1 class="text-2xl font-bold text-gray-800">Solicitudes</h1>
-    <button pButton type="button" icon="pi pi-plus" label="Agregar Solicitud" class="p-button-sm p-button-success" (click)="agregar()"></button>
+
   </div>
 
-  <p-table [value]="solicitudes" [paginator]="true" [rows]="5" responsiveLayout="scroll" class="shadow rounded border border-gray-300 bg-white">
+  <p-toolbar styleClass="mb-6">
+    <ng-template #start>
+      <button pButton type="button" icon="pi pi-plus" label="Agregar Solicitud" class="p-button-sm p-button-success" (click)="agregar()"></button>
+    </ng-template>
+    <ng-template #end>
+      <p-button label="Export" icon="pi pi-upload" severity="secondary" (onClick)="exportCSV()" />
+    </ng-template>
+  </p-toolbar>
+  <p-table
+    #dt
+    [value]="solicitudes"
+    [paginator]="true"
+    [rows]="10"
+    [columns]="cols"
+    [rowsPerPageOptions]="[10, 20, 30]"
+    [globalFilterFields]="['name', 'country.name', 'representative.name', 'status']"
+    responsiveLayout="scroll"
+    class="shadow rounded border border-gray-300 bg-white">
     <ng-template pTemplate="header">
       <tr class="bg-gray-100 text-gray-800 text-sm">
         <th>ID</th>

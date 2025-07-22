@@ -1,13 +1,14 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, FormsModule, Validators} from '@angular/forms';
 import {DropdownModule} from 'primeng/dropdown';
 import {Dialog} from 'primeng/dialog';
 import {DialogService, DynamicDialogRef} from 'primeng/dynamicdialog';
 import {AsignacionesService} from '../../../../service/asignaciones.service';
 import {TableModule} from 'primeng/table';
-import {ButtonDirective} from 'primeng/button';
+import {Button, ButtonDirective} from 'primeng/button';
 import {DatePipe} from '@angular/common';
 import {Router} from '@angular/router';
+import {MultiSelect} from 'primeng/multiselect';
 
 @Component({
   selector: 'app-asignaciones',
@@ -17,12 +18,14 @@ import {Router} from '@angular/router';
     Dialog,
     TableModule,
     ButtonDirective,
-    DatePipe
+    DatePipe,
+    MultiSelect,
+    Button
   ],
   templateUrl: './asignaciones.component.html',
   styleUrl: './asignaciones.component.css'
 })
-export class AsignacionesComponent {
+export class AsignacionesComponent implements OnInit{
   solicitudes = [
     {
       id: 1,
@@ -40,11 +43,17 @@ export class AsignacionesComponent {
     }
   ];
 
-  responsables = [
-    { id: 1, nombre: 'Ana Torres' },
-    { id: 2, nombre: 'Carlos Mendoza' },
-    { id: 3, nombre: 'Luis Vega' }
+  usuarios = [
+    { id: 1, nombre: 'Ana Ramos', area: '123 Soporte Digital' },
+    { id: 2, nombre: 'Luis Torres', area: '123 Soporte Digital' },
+    { id: 3, nombre: 'Gabriel Díaz', area: '123 Soporte Digital' },
+    { id: 4, nombre: 'Pedro Mendoza', area: 'Ventas' } // inválido
   ];
+
+  usuariosAsignados: any[] = [];
+  coordinador: any = null;
+
+
   responsableSeleccionado: any = null;
   solicitudSeleccionada: any = null;
   modalVisible = false;
@@ -73,10 +82,6 @@ export class AsignacionesComponent {
   }
 
   cargarResponsables(): void {
-/*    this.usuarioService.getResponsables().subscribe({
-      next: (res) => this.responsables = res.data,
-      error: (err) => console.error('Error al cargar responsables:', err)
-    });*/
   }
 
   abrirAsignacion(solicitud: any): void {
@@ -84,18 +89,31 @@ export class AsignacionesComponent {
     this.modalVisible = true;
   }
 
+  puedeAsignar(): boolean {
+    return this.usuariosAsignados.length > 0 &&
+      this.coordinador &&
+      this.usuariosAsignados.includes(this.coordinador)
+  }
+
+  asignar() {
+    if (this.puedeAsignar()) {
+      // Actualiza la solicitud directamente
+      this.solicitudSeleccionada.responsable = this.coordinador.nombre;
+      this.solicitudSeleccionada.estado = 'En atención';
+
+      // Cierra el diálogo
+      this.modalVisible = false;
+
+      // Limpia selección (opcional)
+      this.usuariosAsignados = [];
+      this.coordinador = null;
+    }
+  }
+
+  cerrar() {
+    this.modalVisible = false;
+  }
   asignarResponsable(): void {
     if (!this.solicitudSeleccionada || !this.responsableSeleccionado) return;
-
-/*    this.asignacionesService.asignarResponsable({
-      solicitudId: this.solicitudSeleccionada.id,
-      responsableId: this.responsableSeleccionado.id
-    }).subscribe({
-      next: () => {
-        this.modalVisible = false;
-        this.cargarSolicitudes();
-      },
-      error: (err) => console.error('Error al asignar responsable:', err)
-    });*/
   }
 }

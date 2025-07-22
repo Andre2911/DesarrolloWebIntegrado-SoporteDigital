@@ -3,10 +3,11 @@ import {Card} from 'primeng/card';
 import {Button, ButtonModule} from 'primeng/button';
 import {FormsModule} from '@angular/forms';
 import {InputText} from 'primeng/inputtext';
-import {PasswordDirective} from 'primeng/password';
+import {Password, PasswordDirective} from 'primeng/password';
 import {AuthService} from '../../../../service/auth.service';
-import {Router} from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
 import {NgIf} from '@angular/common';
+import {Checkbox} from 'primeng/checkbox';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,10 @@ import {NgIf} from '@angular/common';
     FormsModule,
     InputText,
     PasswordDirective,
-    NgIf
+    NgIf,
+    Password,
+    Checkbox,
+    RouterLink
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
@@ -24,6 +28,7 @@ import {NgIf} from '@angular/common';
 export class LoginComponent {
   usuario: string = '';
   clave: string = '';
+  checked: boolean = false;
   error: string | null = null;
 
   constructor(private authService: AuthService, private router: Router) {}

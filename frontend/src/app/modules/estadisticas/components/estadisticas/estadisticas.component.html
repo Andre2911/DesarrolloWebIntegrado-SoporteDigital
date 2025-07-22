@@ -1,1 +1,55 @@
-<p>estadisticas works!</p>
+<p-fluid class="grid grid-cols-12 gap-8">
+  <!-- LINE CHART -->
+  <div class="col-span-12 xl:col-span-6">
+    <div class="card">
+      <div class="font-semibold text-xl mb-1">Evolución de solicitudes por mes</div>
+      <p class="text-sm text-gray-500 mb-4">Visualiza la cantidad de solicitudes registradas mes a mes por parte de los clientes.</p>
+      <p-chart type="line" [data]="lineData" [options]="lineOptions"></p-chart>
+    </div>
+  </div>
+
+  <!-- BAR CHART -->
+  <div class="col-span-12 xl:col-span-6">
+    <div class="card">
+      <div class="font-semibold text-xl mb-1">Solicitudes por tipo</div>
+      <p class="text-sm text-gray-500 mb-4">Muestra la distribución de tipos de solicitud: errores, requerimientos y capacitaciones.</p>
+      <p-chart type="bar" [data]="barData" [options]="barOptions"></p-chart>
+    </div>
+  </div>
+
+  <!-- PIE CHART -->
+  <div class="col-span-12 xl:col-span-6">
+    <div class="card flex flex-col items-center">
+      <div class="font-semibold text-xl mb-1">Colaboradores más activos</div>
+      <p class="text-sm text-gray-500 mb-4 text-center">Participación porcentual de los colaboradores en la atención de solicitudes.</p>
+      <p-chart type="pie" [data]="pieData" [options]="pieOptions"></p-chart>
+    </div>
+  </div>
+
+  <!-- DOUGHNUT CHART -->
+  <div class="col-span-12 xl:col-span-6">
+    <div class="card flex flex-col items-center">
+      <div class="font-semibold text-xl mb-1">Tiempo invertido por solicitud</div>
+      <p class="text-sm text-gray-500 mb-4 text-center">Proporción del tiempo consumido en distintos tipos de solicitudes.</p>
+      <p-chart type="doughnut" [data]="pieData" [options]="pieOptions"></p-chart>
+    </div>
+  </div>
+
+  <!-- POLAR AREA CHART -->
+  <div class="col-span-12 xl:col-span-6">
+    <div class="card flex flex-col items-center">
+      <div class="font-semibold text-xl mb-1">Motivos más frecuentes</div>
+      <p class="text-sm text-gray-500 mb-4 text-center">Análisis de los principales motivos detallados por los clientes al registrar una solicitud.</p>
+      <p-chart type="polarArea" [data]="polarData" [options]="polarOptions"></p-chart>
+    </div>
+  </div>
+
+  <!-- RADAR CHART -->
+  <div class="col-span-12 xl:col-span-6">
+    <div class="card flex flex-col items-center">
+      <div class="font-semibold text-xl mb-1">Evaluación del rendimiento por rol</div>
+      <p class="text-sm text-gray-500 mb-4 text-center">Comparativa entre analistas, diseñadores y programadores respecto a su tiempo de respuesta y eficiencia.</p>
+      <p-chart type="radar" [data]="radarData" [options]="radarOptions"></p-chart>
+    </div>
+  </div>
+</p-fluid>

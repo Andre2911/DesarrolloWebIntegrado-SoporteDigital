@@ -49,7 +49,7 @@ public class AuthController {
                 "id", usuario.getN_id_usuario(),
                 "nombre", usuario.getS_nombre(),
                 "correo", usuario.getS_correo(),
-                "rol", usuario.getRol().getS_nombre_rol() // asumiendo que tienes entidad Rol
+                "rol", usuario.getRol().getS_nombre_rol()
         ));
 
         return ResponseEntity.ok(response);

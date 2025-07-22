@@ -1,0 +1,45 @@
+<div class="card">
+  <h2 class="text-xl font-bold mb-4">Seguimiento de Solicitud #{{ solicitud.id }}</h2>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+    <div><strong>Tipo:</strong> {{ solicitud.tipo }}</div>
+    <div><strong>Estado:</strong> {{ solicitud.estado }}</div>
+    <div><strong>Cliente:</strong> {{ solicitud.cliente }}</div>
+    <div><strong>Coordinador:</strong> {{ solicitud.coordinador }}</div>
+  </div>
+
+  <p-divider></p-divider>
+
+  <h3 class="text-lg font-semibold mt-4 mb-2">Historial de Actividades</h3>
+  <p-timeline [value]="actividades" align="left" class="mb-6">
+    <ng-template pTemplate="content" let-act>
+      <div>
+        <span class="font-bold">{{ act.colaborador }}</span><br />
+        <span>{{ act.descripcion }}</span><br />
+        <small class="text-gray-500">{{ act.horas }} h – {{ act.fecha | date:'short' }}</small>
+      </div>
+    </ng-template>
+  </p-timeline>
+
+  <p-divider></p-divider>
+
+  <h3 class="text-lg font-semibold mb-2">Registrar Nueva Actividad</h3>
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+    <span class="p-float-label">
+      <textarea pInputTextarea [(ngModel)]="nuevaActividad.descripcion" rows="3" id="desc"></textarea>
+      <label for="desc">Descripción</label>
+    </span>
+
+    <span class="p-float-label">
+      <input pInputText type="number" id="horas" [(ngModel)]="nuevaActividad.horas" />
+      <label for="horas">Horas</label>
+    </span>
+  </div>
+
+  <p-button label="Registrar Actividad" icon="pi pi-save" class="mb-4" (onClick)="registrarActividad()" [disabled]="!nuevaActividad.descripcion || !nuevaActividad.horas"></p-button>
+
+  <div *ngIf="esCoordinador && solicitud.estado !== 'Finalizada'">
+    <p-divider></p-divider>
+    <p-button label="Finalizar Solicitud" icon="pi pi-check" severity="success" (onClick)="finalizarSolicitud()"></p-button>
+  </div>
+</div>
